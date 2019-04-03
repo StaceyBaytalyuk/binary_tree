@@ -1,3 +1,5 @@
+package sod.lab4;
+
 import static java.lang.Math.abs;
 
 public class Tree {
@@ -17,8 +19,13 @@ public class Tree {
     }
 
     public void print() {
-        printInfixOrder(root);
-        System.out.println();
+        if ( root != null ) {
+            printInfixOrder(root);
+            System.out.println();
+        } else {
+            System.out.println("Tree is empty");
+        }
+
     }
 
     public int height() {
@@ -29,7 +36,6 @@ public class Tree {
         return isBalanced(root);
     }
 
-    //непарні
     private void addOdd(Node node, Node parent) {
         if ( parent.key % 2 != 0 ) {
             if (node.key <= parent.key) {
@@ -54,7 +60,6 @@ public class Tree {
         }
     }
 
-    //парні
     private void addEven(Node node, Node parent) {
         if ( parent.key % 2 == 0 ) {
             if ( node.key >= parent.key ) {
@@ -90,7 +95,7 @@ public class Tree {
                         abs(height(root.left) - height(root.right)) <=1 );
     }
 
-    private void printInfixOrder(Node parent) { // инфиксный обход
+    private void printInfixOrder(Node parent) {
         if (parent.left != null) {
             printInfixOrder(parent.left);
         }
@@ -99,22 +104,6 @@ public class Tree {
             printInfixOrder(parent.right);
         }
     }
-
-/*    private void addNodeSimple(Node item, Node parent) {
-        if (item.key > parent.key) {
-            if ( parent.right != null ) {
-                addNodeSimple(item, parent.right);
-            } else {
-                parent.right = item;
-            }
-        } else {
-            if ( parent.left != null ) {
-                addNodeSimple(item, parent.left);
-            } else {
-                parent.left = item;
-            }
-        }
-    }*/
 
     private class Node {
         int key;
