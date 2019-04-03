@@ -6,7 +6,11 @@ public class Tree {
     public void add(int value) {
         Node node = new Node(value);
         if ( root != null ) {
-            addNode(node, root);
+            if ( node.key%2 == 0 ) {
+                addEven(node, root);
+            } else {
+                addOdd(node, root);
+            }
         } else {
             root = node;
         }
@@ -25,7 +29,55 @@ public class Tree {
         return isBalanced(root);
     }
 
-//================================================================
+    //непарні
+    private void addOdd(Node node, Node parent) {
+        if ( parent.key % 2 != 0 ) {
+            if (node.key <= parent.key) {
+                if ( parent.left != null ) {
+                    addOdd(node, parent.left);
+                } else {
+                    parent.left = node;
+                }
+            } else {
+                if ( parent.right != null ) {
+                    addOdd(node, parent.right);
+                } else {
+                    parent.right = node;
+                }
+            }
+        } else {
+            if( parent.right != null ) {
+                addOdd(node, parent.right);
+            } else {
+                parent.right = node;
+            }
+        }
+    }
+
+    //парні
+    private void addEven(Node node, Node parent) {
+        if ( parent.key % 2 == 0 ) {
+            if ( node.key >= parent.key ) {
+                if (parent.left != null) {
+                    addEven(node, parent.left);
+                } else {
+                    parent.left = node;
+                }
+            } else {
+                if (parent.right != null) {
+                    addEven(node, parent.right);
+                } else {
+                    parent.right = node;
+                }
+            }
+        } else {
+            if ( parent.left != null ) {
+                addEven(node, parent.left);
+            } else {
+                parent.left = node;
+            }
+        }
+    }
 
     private int height(Node node) {
         return ( node == null ) ? 0: 1 + Math.max(height(node.left), height(node.right));
@@ -48,27 +100,26 @@ public class Tree {
         }
     }
 
-    private void addNode(Node item, Node parent) {
+/*    private void addNodeSimple(Node item, Node parent) {
         if (item.key > parent.key) {
             if ( parent.right != null ) {
-                addNode(item, parent.right);
+                addNodeSimple(item, parent.right);
             } else {
                 parent.right = item;
             }
         } else {
             if ( parent.left != null ) {
-                addNode(item, parent.left);
+                addNodeSimple(item, parent.left);
             } else {
                 parent.left = item;
             }
         }
-    }
+    }*/
 
     private class Node {
         int key;
         Node left;
         Node right;
-        Node parent;
 
         Node(int key) {
             this.key = key;

@@ -4,6 +4,7 @@ public class Main {
         main.run();
     }
 
+    //TODO добавить генерир массива, сравн время добавл
     private void run() {
         int[] arr = {1, -3, 4, -2, 7, -1, 2};
         Tree tree = new Tree();
